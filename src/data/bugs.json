@@ -1,0 +1,15 @@
+[  {
+     "id": 1,
+     "title" : "Erro ao logar",
+     "description": "O usuário não consegue logar com Google",
+     "status": "open",
+     "createdAt": "2025-09-01T12:00:00Z"
+   },
+    {
+     "id": 2,
+     "title" : "Página do dashboard lenta",
+     "description": "O carregamento demora mais de 5 segundos",
+     "status": "in-progress",
+     "createdAt": "2025-09-01T13:00:00Z"
+    }   
+]
