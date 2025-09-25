@@ -1,55 +1,69 @@
 "use client";
 
-import usersDataJSON from "@/data/users.json";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import { User } from "@/types/user";
+import { Bug } from "@/types/Bug";
 import Leaderboard from "@/components/LeaderBoard";
-import { useState, useMemo, useCallback } from "react";
 import SearchBar from "@/components/SearchBar";
 import StatusFilter from "@/components/StatusFilter";
 import ProgressBar from "@/components/ProgressBar";
 import BugCard from "@/components/BugCard";
 import Profile from "@/components/Profile";
 import { useGamification } from "@/hooks/useGamification";
-import { Bug } from "@/types/Bug";
-import bugsDataJSON from "@/data/bugs.json";
-
-const usersData: User[] = usersDataJSON as User[];
-const initialBugs: Bug[] = bugsDataJSON as Bug[];
 
 export default function Home() {
   // Estados principais
   const [search, setSearch] = useState("");
-  const [statusFilter, setStatusFilter] = useState<"all" | "open" | "in-progress" | "closed">("all");
-  const [bugs, setBugs] = useState<Bug[]>(initialBugs);
+  const [statusFilter, setStatusFilter] = useState<
+    "all" | "open" | "in-progress" | "closed"
+  >("all");
+  const [bugs, setBugs] = useState<Bug[]>([]);
 
   // Gamificação
   const { xp, level, xpToNextLevel, addXp } = useGamification();
 
-  // Calcula pontos totais e fechados usando useMemo para performance
+  // Buscar bugs da API
+  useEffect(() => {
+    async function fetchBugs() {
+      try {
+        const res = await fetch("/api/bugs");
+        const data = await res.json();
+        setBugs(data);
+      } catch (err) {
+        console.error("Erro ao buscar bugs:", err);
+      }
+    }
+    fetchBugs();
+  }, []);
+
+  // Calcula pontos totais e fechados
   const { totalPoints, closedPoints } = useMemo(() => {
     const total = bugs.reduce((sum, bug) => sum + (bug.points ?? 1), 0);
-    const closed = bugs.filter((bug) => bug.status === "closed").reduce((sum, bug) => sum + (bug.points ?? 1), 0);
+    const closed = bugs
+      .filter((bug) => bug.status === "closed")
+      .reduce((sum, bug) => sum + (bug.points ?? 1), 0);
     return { totalPoints: total, closedPoints: closed };
   }, [bugs]);
 
-  // Filtragem de bugs (memo)
+  // Filtragem
   const filteredBugs = useMemo(() => {
     return bugs.filter((bug) => {
       const matchesSearch =
         bug.title.toLowerCase().includes(search.toLowerCase()) ||
         bug.description.toLowerCase().includes(search.toLowerCase());
-      const matchesStatus = statusFilter === "all" || bug.status === statusFilter;
+      const matchesStatus =
+        statusFilter === "all" || bug.status === statusFilter;
       return matchesSearch && matchesStatus;
     });
   }, [bugs, search, statusFilter]);
 
-  // Função para fechar bug
+  // Fechar bug
   const handleCloseBug = useCallback(
     (id: number) => {
       setBugs((prevBugs) =>
         prevBugs.map((bug) => {
           if (bug.id === id && bug.status !== "closed") {
-            addXp(bug.points ?? 1); // só adiciona XP se bug realmente for fechado
+            addXp(bug.points ?? 1);
             return { ...bug, status: "closed" };
           }
           return bug;
@@ -65,27 +79,35 @@ export default function Home() {
         Bug Tracker Gamificado
       </h1>
 
-      {/* Perfil do usuário */}
+      {/* Perfil */}
       <Profile level={level} xp={xp} xpToNextLevel={xpToNextLevel} />
 
-      {/* Barra de progresso geral dos bugs */}
+      {/* Progresso */}
       <ProgressBar closedPoints={closedPoints} totalPoints={totalPoints} />
 
-      {/*Leadboard*/}
-      <Leaderboard users={usersData} />
+      {/* Leaderboard */}
+      {/* ⚠️ Aqui você tem que passar os usuários reais */}
+      <Leaderboard users={[]} />
 
       {/* Filtros */}
       <div className="flex flex-col sm:flex-row gap-4 mb-6">
         <SearchBar search={search} setSearch={setSearch} />
-        <StatusFilter statusFilter={statusFilter} setStatusFilter={setStatusFilter} />
+        <StatusFilter
+          statusFilter={statusFilter}
+          setStatusFilter={setStatusFilter}
+        />
       </div>
 
-      {/* Lista de bugs */}
+      {/* Lista */}
       <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {filteredBugs.length > 0 ? (
-          filteredBugs.map((bug) => <BugCard key={bug.id} bug={bug} onClose={handleCloseBug} />)
+          filteredBugs.map((bug) => (
+            <BugCard key={bug.id} bug={bug} onClose={handleCloseBug} />
+          ))
         ) : (
-          <p className="text-gray-500 text-center col-span-full">Nenhum bug encontrado.</p>
+          <p className="text-gray-500 text-center col-span-full">
+            Nenhum bug encontrado.
+          </p>
         )}
       </div>
     </main>

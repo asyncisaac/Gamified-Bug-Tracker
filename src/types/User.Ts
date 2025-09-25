@@ -1,6 +1,9 @@
+import { Bug } from "./Bug";
+
 export interface User {
-  readonly id: number;
-  readonly name: string;
-  readonly xp: number;
-  readonly level: number;
+  id: number;
+  name: string;
+  xp: number;
+  level: number;
+  bugs?: Bug[]; // opcional
 }
