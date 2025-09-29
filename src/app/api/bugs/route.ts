@@ -5,43 +5,39 @@ import { prisma } from "../../../../prisma/prisma";
 export async function GET() {
   try {
     const bugs = await prisma.bug.findMany({
-      include: { user: true },
+      include: { user: true }, // opcional: traz também o usuário responsável
       orderBy: { id: "desc" },
     });
-
     return NextResponse.json(bugs);
   } catch (err) {
     console.error("GET /api/bugs error:", err);
-    return NextResponse.json({ error: "Failed to fetch bugs" }, { status: 500 });
+    return NextResponse.json({ error: "Erro ao buscar bugs" }, { status: 500 });
   }
 }
 
-// POST /api/bugs → cria um novo bug
+// POST /api/bugs → cria bug novo
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { title, description, status, points, userId } = body;
+    const { title, description, points, status, userId } = body;
 
-    if (!title || !description || !userId) {
-      return NextResponse.json(
-        { error: "Title, description and userId are required" },
-        { status: 400 }
-      );
+    if (!title || !description) {
+      return NextResponse.json({ error: "Title e description são obrigatórios" }, { status: 400 });
     }
 
     const bug = await prisma.bug.create({
       data: {
         title,
         description,
-        status: status || "open",
-        points: points || 1,
-        userId,
+        points: points ?? 1,
+        status: status ?? "open",
+        userId: userId ?? null,
       },
     });
 
     return NextResponse.json(bug, { status: 201 });
   } catch (err) {
     console.error("POST /api/bugs error:", err);
-    return NextResponse.json({ error: "Failed to create bug" }, { status: 500 });
+    return NextResponse.json({ error: "Erro ao criar bug" }, { status: 500 });
   }
 }

@@ -22,6 +22,30 @@ export default function Home() {
   // Gamificação
   const { xp, level, xpToNextLevel, addXp } = useGamification();
 
+  // Buscar usuários
+
+  // Estado para usuários
+const [users, setUsers] = useState<User[]>([]);
+
+// Buscar usuários
+useEffect(() => {
+  async function fetchUsers() {
+    try {
+      const res = await fetch("/api/users");
+      const data = await res.json();
+      console.log("USERS FRONT:", data); // 👈 só pra checar
+      setUsers(data);
+    } catch (err) {
+      console.error("Erro ao buscar usuários:", err);
+    }
+  }
+  fetchUsers();
+}, []);
+
+// ...
+
+
+
   // Buscar bugs da API
   useEffect(() => {
     async function fetchBugs() {
@@ -85,9 +109,9 @@ export default function Home() {
       {/* Progresso */}
       <ProgressBar closedPoints={closedPoints} totalPoints={totalPoints} />
 
-      {/* Leaderboard */}
-      {/* ⚠️ Aqui você tem que passar os usuários reais */}
-      <Leaderboard users={[]} />
+     
+      {/* Leaderboard vindo do banco */}
+      <Leaderboard users={users} />
 
       {/* Filtros */}
       <div className="flex flex-col sm:flex-row gap-4 mb-6">
