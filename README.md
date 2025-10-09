@@ -122,7 +122,9 @@ bugtracker-gamificado/
 │   ├── schema.prisma     # Schema do banco
 │   └── seed.ts          # Dados iniciais
 └── public/              # Assets estáticos
+
 🎯 Como Usar
+
 Criar Usuários - Use a API ou interface para criar usuários
 
 Reportar Bugs - Adicione bugs com título, descrição e pontos
