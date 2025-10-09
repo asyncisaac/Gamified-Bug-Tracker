@@ -77,29 +77,30 @@ Sistema completo de tracking de bugs com gamificação - usuários ganham XP, so
 ```bash
 git clone https://github.com/asyncisaac/Gamified-Bug-Tracker.git
 cd Gamified-Bug-Tracker
-Instale as dependências
 
+2. **Clone o repositório**Instale as dependências
 bash
 npm install
-Configure o banco de dados
 
+3. **Clone o repositório**Configure o banco de dados
 bash
 npx prisma generate
 npx prisma db push
-Popule com dados de exemplo
 
+4. **Clone o repositório**Popule com dados de exemplo
 bash
 npx prisma db seed
-Execute em desenvolvimento
 
+5. **Clone o repositório**Execute em desenvolvimento
 bash
 npm run dev
-Acesse a aplicação
 
+6. **Acesse a aplicação**
 text
 http://localhost:3000
+
 🗃️ Estrutura do Projeto
-text
+
 bugtracker-gamificado/
 ├── src/
 │   ├── app/
@@ -133,7 +134,9 @@ Subir de Nível - Acumule XP suficiente para evoluir
 Competir - Acompanhe sua posição no leaderboard
 
 🔧 API Endpoints
+
 Bugs
+
 GET /api/bugs - Lista todos os bugs
 
 POST /api/bugs - Cria novo bug
@@ -145,6 +148,7 @@ PUT /api/bugs/[id] - Atualiza bug
 DELETE /api/bugs/[id] - Remove bug
 
 Users
+
 GET /api/users - Lista usuários (leaderboard)
 
 POST /api/users - Cria novo usuário
