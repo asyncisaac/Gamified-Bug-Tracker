@@ -14,16 +14,16 @@ Sistema completo de tracking de bugs com gamificação - usuários ganham XP, so
 <div align="center">
 
 ### 🎯 Dashboard Principal
-<img src="./public/image4.png" width="800" alt="Dashboard do BugTracker">
+<img src="https://i.imgur.com/W4nBE1A.png" width="800" alt="Dashboard do BugTracker">
 
-### 🏆 Sistema de Gamificação
-<img src="./public/image1.png" width="800" alt="Sistema de XP e Levels">
+### 🏆 Sistema de Gamificação e XP
+<img src="https://i.imgur.com/SJ1pSPi.png" width="800" alt="Sistema de XP e Levels">
 
 ### 📊 Leaderboard Competitivo  
-<img src="./public/image2.png" width="800" alt="Leaderboard dos Usuários">
+<img src="https://i.imgur.com/vFcpoMF.png" width="800" alt="Leaderboard dos Usuários">
 
 ### 📊 Demonstração de Bug
-<img src="./public/image3.png" width="800" alt="Leaderboard dos Usuários">
+<img src="https://i.imgur.com/ofwBIeS.png" width="800" alt="Leaderboard dos Usuários">
 
 </div>
 
@@ -78,113 +78,3 @@ Sistema completo de tracking de bugs com gamificação - usuários ganham XP, so
 git clone https://github.com/seu-usuario/bugtracker-gamificado.git
 cd bugtracker-gamificado
 
-2. **Instale as dependências**
-```bash
-npm install
-
-3. **Configure o banco de dados**
-```bash 
-npx prisma generate
-npx prisma db push
-
-4. **Popule com dados de exemplo**
-```bash
-npx prisma db seed
-
-5. **Execute em desenvolvimento**
-```bash
-npm run dev
-
-6. **Acesse a aplicação**
-```text
-http://localhost:3000
-
-
-### 🗃️ Estrutura do Projeto
-
-bugtracker-gamificado/
-├── src/
-│   ├── app/
-│   │   ├── api/           # API Routes
-│   │   │   ├── bugs/
-│   │   │   └── users/
-│   │   ├── layout.tsx
-│   │   └── page.tsx
-│   ├── components/        # Componentes React
-│   │   ├── BugCard.tsx
-│   │   ├── LeaderBoard.tsx
-│   │   └── ...
-│   ├── hooks/            # Custom Hooks
-│   │   └── useGamification.ts
-│   └── types/            # Definições TypeScript
-│       ├── Bug.ts
-│       └── User.ts
-├── prisma/
-│   ├── schema.prisma     # Schema do banco
-│   └── seed.ts          # Dados iniciais
-└── public/              # Assets estáticos
-
-## 🎯 Como Usar
-
-1. Criar Usuários - Use a API ou interface para criar usuários.
-
-2. Reportar Bugs - Adicione bugs com título, descrição e pontos.
-
-3. Fechar Bugs - Ganhe XP ao marcar bugs como resolvidos.
-
-4. Subir de Nível - Acumule XP suficiente para evoluir.
-
-5. Competir - Acompanhe sua posição no leaderboard.
-
-## 🔧 API Endpoints
-
-Bugs
-
-GET /api/bugs - Lista todos os bugs
-
-POST /api/bugs - Cria novo bug
-
-GET /api/bugs/[id] - Busca bug específico
-
-PUT /api/bugs/[id] - Atualiza bug
-
-DELETE /api/bugs/[id] - Remove bug
-
-Users
-
-GET /api/users - Lista usuários (leaderboard)
-
-POST /api/users - Cria novo usuário
-
-GET /api/users/[id] - Busca usuário específico
-
-🤝 Contribuindo
-
-Fork o projeto
-
-Crie uma branch: git checkout -b feature/nova-feature
-
-Commit suas mudanças: git commit -m 'Add nova feature'
-
-Push para a branch: git push origin feature/nova-feature
-
-Abra um Pull Request
-
-📄 Licença
-Este projeto está sob a licença MIT. Veja o arquivo LICENSE para detalhes.
-
-👨‍💻 Autor
-
-Seu Nome
-
-GitHub: @asyncisaac
-
-LinkedIn: 
-
-🙏 Agradecimentos
-
-Equipe da Vercel pelo Next.js.
-
-Time do Prisma pelo ORM incrível.
-
-Comunidade Tailwind CSS.
