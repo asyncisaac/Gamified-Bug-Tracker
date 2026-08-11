@@ -1,183 +1,275 @@
-# 🐛 Bug Tracker Gamificado
-
-[![Next.js](https://img.shields.io/badge/Next.js-15.5.2-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
-[![Prisma](https://img.shields.io/badge/Prisma-6.16.2-2D3748?style=for-the-badge&logo=prisma)](https://www.prisma.io/)
-
-Sistema completo de tracking de bugs com gamificação - usuários ganham XP, sobem de nível e competem no leaderboard.
-
-## 🚀 Demonstração
-
-🔗 **Vídeo Demo:** [Em breve]  
-📱 **Repositório:** [GitHub Link](https://github.com/asyncisaac/Gamified-Bug-Tracker)
-
 <div align="center">
 
-### 🎯 Dashboard Principal
-<img src="https://i.imgur.com/W4nBE1A.png" width="800" alt="Dashboard do BugTracker">
+# 🐛 Gamified Bug Tracker
 
-### 🏆 Sistema de Gamificação e XP
-<img src="https://i.imgur.com/SJ1pSPi.png" width="800" alt="Sistema de XP e Levels">
+**Bug tracking that turns fixing bugs into a game — XP, levels, badges & leaderboards**
 
-### 📊 Leaderboard Competitivo  
-<img src="https://i.imgur.com/vFcpoMF.png" width="800" alt="Leaderboard dos Usuários">
+[![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white)](https://www.prisma.io/)
+[![Tailwind](https://img.shields.io/badge/Tailwind-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![SQLite](https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)](https://www.sqlite.org/)
 
-### ✅ Demonstração de Bug
-<img src="https://i.imgur.com/ofwBIeS.png" width="800" alt="Fechando um Bug">
+**[🚀 Live Demo](https://your-bug-tracker-demo.com)** · **[📊 Screenshots](#-screenshots)** · **[🎮 Features](#-features)** · **[🛠️ Run Locally](#-running-locally)**
 
 </div>
 
-## 🎮 Funcionalidades
+---
 
-### 🐛 Core Features
-- ✅ **Reportar Bugs** - Crie e descreva bugs detalhadamente
-- ✅ **Sistema de Status** - Open, In Progress, Closed
-- ✅ **Busca e Filtros** - Encontre bugs rapidamente
-- ✅ **Atribuição** - Associe bugs a usuários específicos
+## 📸 Screenshots
 
-### 🏆 Gamificação
-- ⭐ **Sistema de XP** - Ganhe experiência fechando bugs
-- 📈 **Progressão de Nível** - Suba de nível ao acumular XP
-- 🏅 **Leaderboard** - Compita com outros usuários
-- 📊 **Barra de Progresso** - Acompanhe sua evolução visualmente
+<div align="center">
 
-### 👥 Gestão de Usuários
-- 👤 **Perfis Personalizados** - Avatar, nível e XP
-- 📋 **Histórico de Bugs** - Todos os bugs resolvidos
-- 🎯 **Métricas Individuais** - Desempenho por usuário
+### 🎯 Main Dashboard
+<img src="https://i.imgur.com/W4nBE1A.png" width="800" alt="Bug Tracker Dashboard">
 
-## 🛠️ Stack Tecnológica
+### 🏆 XP Progression & Levels
+<img src="https://i.imgur.com/SJ1pSPi.png" width="800" alt="XP and Level System">
 
-### Frontend
-- **Next.js 15** - React framework com App Router
-- **TypeScript** - Tipagem estática avançada
-- **Tailwind CSS** - Estilização utility-first
-- **React Hooks** - Estado e efeitos colaterais
+### 📊 Competitive Leaderboard
+<img src="https://i.imgur.com/vFcpoMF.png" width="800" alt="User Leaderboard">
 
-### Backend
-- **Next.js API Routes** - API endpoints integrados
-- **Prisma ORM** - Database toolkit type-safe
-- **SQLite** - Banco de dados relacional
+### ✅ Closing a Bug & Earning XP
+<img src="https://i.imgur.com/ofwBIeS.png" width="800" alt="Closing a Bug Flow">
 
-### Features Técnicas
-- 🔒 **Type Safety** - TypeScript em todo o projeto
-- 🚀 **Performance** - Otimizações com useMemo/useCallback
-- 📱 **Responsive** - Design mobile-first
-- 🛡️ **Error Handling** - Tratamento robusto de erros
+</div>
 
-## 📦 Como Executar
+---
 
-### Pré-requisitos
-- Node.js 18+ 
-- npm ou yarn
+## 🎯 What It Does
 
-### Instalação
+A full-stack bug tracking platform for agile teams — **with game mechanics baked in.** Report bugs, assign them to teammates, work through statuses (Open → In Progress → Closed). Every time you close a bug, the system awards XP based on bug severity. Level up, climb the leaderboard, and make bug fixing feel like a team sport instead of a chore.
 
-1. **Clone o repositório**
+### Why I Built It
+
+Every dev team uses a bug tracker. Most are boring. This one answers:
+
+> "How do we make fixing the 500th 'button is 2px misaligned' bug feel rewarding?"
+
+Answer: **progression loops that actually reward effort.** Critical bugs = more XP. Fast closing = team recognition on the leaderboard. Turn your Jira ticket slog into a competition people want to win.
+
+---
+
+## 🎮 Features
+
+### 🐛 Core Bug Tracking
+- ✅ **Report bugs** — title, description, severity, assignee
+- ✅ **Status workflow** — Open → In Progress → Closed (with transitions logged)
+- ✅ **Search & filters** — find by status, severity, assignee, text search
+- ✅ **Assign to teammates** — individual accountability
+- ✅ **Bug detail view** — full history, notes, XP earned on close
+
+### 🏆 Gamification Layer
+- ⭐ **XP system** — XP awarded on bug close, scaled by severity (Low/Medium/High/Critical)
+- 📈 **Level progression** — XP thresholds per level, level-up toast notifications
+- 📊 **Competitive leaderboard** — top users by total XP, weekly resettable
+- 🎯 **Visual progress bar** — on every user card, see how far to the next level
+- 👤 **Per-user bug history** — every bug closed, every XP gain logged
+
+### 👥 User Profiles
+- 👤 Custom profiles with avatar, level badge, XP counter
+- 📋 Personal resolved bug history timeline
+- 📈 Individual performance stats (bugs closed, avg severity, streaks)
+
+---
+
+## 🏗️ Architecture
+
+```mermaid
+flowchart TB
+    U[Team Member] -->|Browser| FE[Next.js 15<br/>App Router]
+    FE -->|Server Actions + API Routes| API[Next.js Route Handlers<br/>/api/bugs /api/users]
+    API -->|Type-safe queries| PRISMA[Prisma Client]
+    PRISMA --> DB[(SQLite<br/>/prisma/dev.db)]
+    DB -->|Schema| MODELS[Bug · User · BugStatusHistory · LevelConfig]
+
+    subgraph XP Logic
+        BUG_CLOSE[Close Bug]
+        SEV[Severity lookup]
+        XP[XP grant: 10/25/50/100 pts]
+        LEVEL[Level threshold check<br/>→ level up if XP crosses]
+        BUG_CLOSE --> SEV --> XP --> LEVEL
+    end
+```
+
+### Engineering Notes
+- **Atomic XP + bug close in a Prisma transaction** — you can't close a bug without the XP being written (or vice versa)
+- **Prisma schema defines level thresholds** — tune XP curves in `LevelConfig` without touching code
+- **Optimistic UI on the frontend** — leaderboard re-renders the moment you close a bug (no reload)
+- **App Router + Route Handlers** — modern Next.js 15 patterns, no legacy Pages API
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| **Framework** | Next.js 15 (App Router) · React 19 |
+| **Language** | TypeScript 5 (strict mode) |
+| **Styling** | Tailwind CSS (utility-first) + responsive |
+| **Database** | SQLite (dev) / Postgres-ready (prod via Prisma migrate) |
+| **ORM** | Prisma (fully typed queries, schema-first) |
+| **Performance** | `useMemo` / `useCallback` for expensive lists, route-level caching |
+
+---
+
+## 🚀 Live Demo
+
+> ⚠️ **Deploy first, then fill this in.**
+>
+> | Resource | URL |
+> |----------|-----|
+> | Live App | `https://your-bug-tracker-demo.com` |
+> | Demo user | `demo@example.com` / `demo1234` |
+>
+> Tip: deploy to **Vercel** in ~1 minute (Next.js native support; swap SQLite for Postgres on Neon/Supabase).
+
+---
+
+## ⚙️ Running Locally
+
+### Prerequisites
+- Node.js 18+ (20+ recommended)
+- npm / yarn / pnpm
+
+### 1. Clone & Install
 ```bash
 git clone https://github.com/asyncisaac/Gamified-Bug-Tracker.git
 cd Gamified-Bug-Tracker
-
-2. **Clone o repositório**Instale as dependências
-bash
 npm install
+```
 
-3. **Clone o repositório**Configure o banco de dados
-bash
+### 2. Database Setup
+```bash
+# Generate Prisma client
 npx prisma generate
+
+# Create tables (SQLite auto-creates the file)
 npx prisma db push
 
-4. **Clone o repositório**Popule com dados de exemplo
-bash
+# Seed with sample users + bugs to see the gamification in action
 npx prisma db seed
+```
 
-5. **Clone o repositório**Execute em desenvolvimento
-bash
+### 3. Run Dev Server
+```bash
 npm run dev
+```
 
-6. **Acesse a aplicação**
-text
-http://localhost:3000
+Open → **http://localhost:3000**
 
-🗃️ Estrutura do Projeto
+---
 
-bugtracker-gamificado/
+## 📂 Project Structure
+
+```
+Gamified-Bug-Tracker/
 ├── src/
 │   ├── app/
-│   │   ├── api/           # API Routes
-│   │   │   ├── bugs/
-│   │   │   └── users/
-│   │   ├── layout.tsx
-│   │   └── page.tsx
-│   ├── components/        # Componentes React
-│   │   ├── BugCard.tsx
-│   │   ├── LeaderBoard.tsx
-│   │   └── ...
-│   ├── hooks/            # Custom Hooks
-│   │   └── useGamification.ts
-│   └── types/            # Definições TypeScript
-│       ├── Bug.ts
-│       └── User.ts
+│   │   ├── api/
+│   │   │   ├── bugs/           # CRUD + close/assign route handlers
+│   │   │   │   ├── route.ts
+│   │   │   │   └── [id]/route.ts
+│   │   │   └── users/          # Leaderboard + profile endpoints
+│   │   │       ├── route.ts
+│   │   │       └── [id]/route.ts
+│   │   ├── layout.tsx          # Root layout + Tailwind setup
+│   │   └── page.tsx            # Main dashboard
+│   ├── components/
+│   │   ├── BugCard.tsx         # Bug list card (status, XP, severity)
+│   │   ├── LeaderBoard.tsx     # Ranked user list with XP bars
+│   │   ├── BugDetailModal.tsx  # Full bug view + close flow
+│   │   └── UserLevelBadge.tsx  # Level + progress bar component
+│   ├── hooks/
+│   │   └── useGamification.ts  # XP / level calculation helpers
+│   └── types/
+│       ├── Bug.ts              # Bug types + enums
+│       └── User.ts             # User + level types
 ├── prisma/
-│   ├── schema.prisma     # Schema do banco
-│   └── seed.ts          # Dados iniciais
-└── public/              # Assets estáticos
+│   ├── schema.prisma           # Data model
+│   └── seed.ts                 # Demo users, demo bugs, level config
+└── public/                     # Static assets
+```
 
-🎯 Como Usar
+---
 
-Criar Usuários - Use a API ou interface para criar usuários
+## 🔧 API Endpoints
 
-Reportar Bugs - Adicione bugs com título, descrição e pontos
+### Bugs
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET`  | `/api/bugs` | List all bugs (query: `?status=Open&assigneeId=...`) |
+| `POST` | `/api/bugs` | Create a new bug |
+| `GET`  | `/api/bugs/[id]` | Single bug detail with full history |
+| `PUT`  | `/api/bugs/[id]` | Update bug (title, description, assignee, severity) |
+| `DELETE` | `/api/bugs/[id]` | Delete a bug |
+| `POST` | `/api/bugs/[id]/close` | 🔥 Close bug → grants XP, checks level-up |
 
-Fechar Bugs - Ganhe XP ao marcar bugs como resolvidos
+### Users & Leaderboard
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET`  | `/api/users` | Leaderboard (sorted by total XP, desc) |
+| `POST` | `/api/users` | Create a new user |
+| `GET`  | `/api/users/[id]` | User profile + stats + bug history |
 
-Subir de Nível - Acumule XP suficiente para evoluir
+---
 
-Competir - Acompanhe sua posição no leaderboard
+## 🎮 How to Use (Demo Flow)
 
-🔧 API Endpoints
+1. **Create users** via the UI or use the seed accounts
+2. **Report 5–10 bugs** with varying severity (Critical = most XP)
+3. **Assign them** to different users
+4. **Close bugs one by one** → watch XP pop, levels go up, leaderboard shuffle
+5. **Open the leaderboard** → competition begins 😄
 
-Bugs
+---
 
-GET /api/bugs - Lista todos os bugs
+## 🧪 Testing the XP Curve
 
-POST /api/bugs - Cria novo bug
+| Severity | XP Awarded | Example |
+|----------|-----------|---------|
+| Low | 10 | Spelling, CSS nitpick |
+| Medium | 25 | Broken filter, minor UX |
+| High | 50 | Feature broken for subset of users |
+| Critical | 100 | Data loss, 500 errors, security |
 
-GET /api/bugs/[id] - Busca bug específico
+> Tune these values in `prisma/seed.ts` → `LevelConfig` or directly in the XP helper.
 
-PUT /api/bugs/[id] - Atualiza bug
+---
 
-DELETE /api/bugs/[id] - Remove bug
+## 🚢 Deployment
 
-Users
+### Fastest: Vercel + Postgres (Neon / Supabase)
 
-GET /api/users - Lista usuários (leaderboard)
+1. Push the repo to GitHub
+2. **Import into Vercel** → auto-detects Next.js
+3. In Vercel project → Storage → **Create Postgres** (or connect Neon/Supabase)
+4. Set environment variable:
+   ```
+   DATABASE_URL=postgresql://user:pass@host:5432/verceldb
+   ```
+5. In Build command: add DB bootstrap:
+   ```bash
+   npx prisma generate && npx prisma db push && npx prisma db seed && next build
+   ```
+6. Deploy 🎉 → first load seeds the level config + demo users
 
-POST /api/users - Cria novo usuário
+---
 
-GET /api/users/[id] - Busca usuário específico
+## 🧠 Ideas for Next Version
 
-🤝 Contribuindo
-Fork o projeto
+- [ ] Badge system ("Bug Slayer" after 100 bugs closed, etc.)
+- [ ] Team rooms + per-team leaderboards
+- [ ] Attach screenshots / files to bugs
+- [ ] Comments + @mentions on bugs
+- [ ] Slack/Discord webhook on level-up: "Isaac just hit Level 15!" 🎉
+- [ ] Weekly XP reset for season-based competition
+- [ ] OAuth login (GitHub / Google)
 
-Crie uma branch: git checkout -b feature/nova-feature
+---
 
-Commit suas mudanças: git commit -m 'Add nova feature'
+<div align="center">
 
-Push para a branch: git push origin feature/nova-feature
+**[⬆ Back to Top](#-gamified-bug-tracker)** · Make bug fixing fun again 🎮
 
-Abra um Pull Request
-
-📄 Licença
-Este projeto está sob a licença MIT. Veja o arquivo LICENSE para detalhes.
-
-👨‍💻 Autor
-Isaac Marinho
-GitHub: @asyncisaac
-
-🙏 Agradecimentos
-Equipe da Vercel pelo Next.js
-
-Time do Prisma pelo ORM incrível
-
-Comunidade Tailwind CSS
+</div>
