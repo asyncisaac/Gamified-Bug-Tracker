@@ -10,7 +10,7 @@
 [![Tailwind](https://img.shields.io/badge/Tailwind-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![SQLite](https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)](https://www.sqlite.org/)
 
-**[🚀 Live Demo](https://your-bug-tracker-demo.com)** · **[📊 Screenshots](#-screenshots)** · **[🎮 Features](#-features)** · **[🛠️ Run Locally](#-running-locally)**
+**[🎮 Demo Flow](#-how-to-use-demo-flow)** · **[🎮 Features](#-features)** · **[🛠️ Run Locally](#-running-locally)**
 
 </div>
 
@@ -113,16 +113,9 @@ flowchart TB
 
 ---
 
-## 🚀 Live Demo
+## 🚀 Hosted Demo
 
-> ⚠️ **Deploy first, then fill this in.**
->
-> | Resource | URL |
-> |----------|-----|
-> | Live App | `https://your-bug-tracker-demo.com` |
-> | Demo user | `demo@example.com` / `demo1234` |
->
-> Tip: deploy to **Vercel** in ~1 minute (Next.js native support; swap SQLite for Postgres on Neon/Supabase).
+A hosted demo is not published yet. To try the app, follow the local setup below and then use the [Demo Flow](#-how-to-use-demo-flow).
 
 ---
 
