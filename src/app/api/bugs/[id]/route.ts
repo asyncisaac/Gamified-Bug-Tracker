@@ -9,9 +9,9 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    const bugId = parseInt(id);
+    const bugId = Number(id);
     
-    if (isNaN(bugId)) {
+    if (!Number.isSafeInteger(bugId) || bugId < 1) {
       return NextResponse.json({ error: "ID inválido" }, { status: 400 });
     }
 
@@ -38,16 +38,18 @@ export async function PUT(
 ) {
   try {
     const { id } = await params; // 👈 AWAIT aqui também
-    const bugId = parseInt(id);
+    const bugId = Number(id);
     
-    if (isNaN(bugId)) {
+    if (!Number.isSafeInteger(bugId) || bugId < 1) {
       return NextResponse.json({ error: "ID inválido" }, { status: 400 });
     }
 
     const body = await req.json();
     const { status } = body;
-
-    console.log(`🔄 Fechando bug ${bugId} para status: ${status}`);
+    const allowedStatus = ["open", "in-progress", "closed"];
+    if (typeof status !== "string" || !allowedStatus.includes(status)) {
+      return NextResponse.json({ error: "Status deve ser: open, in-progress ou closed" }, { status: 400 });
+    }
 
     // Atualiza o bug no banco
     const updatedBug = await prisma.bug.update({
@@ -59,15 +61,13 @@ export async function PUT(
       include: { user: true }
     });
 
-    console.log(`✅ Bug ${bugId} fechado com sucesso!`);
-
     return NextResponse.json(updatedBug);
 
   } catch (err) {
     console.error("❌ PUT /api/bugs/[id] error:", err);
     
     // Erro específico para registro não encontrado
-    if (err instanceof Error && err.message.includes('RecordNotFound')) {
+    if (typeof err === "object" && err !== null && "code" in err && err.code === "P2025") {
       return NextResponse.json({ error: "Bug não encontrado" }, { status: 404 });
     }
 
@@ -85,9 +85,9 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params;
-    const bugId = parseInt(id);
+    const bugId = Number(id);
     
-    if (isNaN(bugId)) {
+    if (!Number.isSafeInteger(bugId) || bugId < 1) {
       return NextResponse.json({ error: "ID inválido" }, { status: 400 });
     }
 
@@ -98,6 +98,10 @@ export async function DELETE(
     return NextResponse.json({ message: "Bug deletado com sucesso" });
   } catch (err) {
     console.error("DELETE /api/bugs/[id] error:", err);
+    if (typeof err === "object" && err !== null && "code" in err && err.code === "P2025") {
+      return NextResponse.json({ error: "Bug não encontrado" }, { status: 404 });
+    }
     return NextResponse.json({ error: "Erro ao deletar bug" }, { status: 500 });
   }
 }
+
