@@ -13,6 +13,9 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: "Paginação inválida (page >= 1, limit entre 1 e 100)" }, { status: 400 });
     }
     const skip = (page - 1) * limit;
+    if (!Number.isSafeInteger(skip)) {
+      return NextResponse.json({ error: "Página fora do limite" }, { status: 400 });
+    }
     
     const allowedStatus = ["open", "in-progress", "closed"];
     if (status && !allowedStatus.includes(status)) {
@@ -56,8 +59,17 @@ export async function GET(request: Request) {
 // POST 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
-    const { title, description, points, status, userId } = body;
+    const body: unknown = await req.json();
+    if (!body || typeof body !== "object" || Array.isArray(body)) {
+      return NextResponse.json({ error: "Corpo da requisição inválido" }, { status: 400 });
+    }
+    const { title, description, points, status, userId } = body as {
+      title?: unknown;
+      description?: unknown;
+      points?: unknown;
+      status?: unknown;
+      userId?: unknown;
+    };
 
     if (typeof title !== "string" || !title.trim() || typeof description !== "string" || !description.trim()) {
       return NextResponse.json({ 
@@ -66,31 +78,25 @@ export async function POST(req: Request) {
     }
 
     const allowedStatus = ["open", "in-progress", "closed"];
-    if (status && !allowedStatus.includes(status)) {
+    if (status !== undefined && (typeof status !== "string" || !allowedStatus.includes(status))) {
       return NextResponse.json({ 
         error: "Status deve ser: open, in-progress ou closed" 
       }, { status: 400 });
     }
 
-    if (points !== undefined && (!Number.isSafeInteger(points) || points < 0 || points > 100)) {
+    if (points !== undefined && (typeof points !== "number" || !Number.isSafeInteger(points) || points < 0 || points > 100)) {
       return NextResponse.json({ 
         error: "Points devem ser entre 0 e 100" 
       }, { status: 400 });
     }
 
-    if (!Number.isSafeInteger(userId) || userId < 1) {
+    if (typeof userId !== "number" || !Number.isSafeInteger(userId) || userId < 1) {
       return NextResponse.json({ error: "userId válido é obrigatório" }, { status: 400 });
     }
 
-    if (userId) {
-      const userExists = await prisma.user.findUnique({
-        where: { id: userId }
-      });
-      if (!userExists) {
-        return NextResponse.json({ 
-          error: "Usuário não encontrado" 
-        }, { status: 404 });
-      }
+    const userExists = await prisma.user.findUnique({ where: { id: userId } });
+    if (!userExists) {
+      return NextResponse.json({ error: "Usuário não encontrado" }, { status: 404 });
     }
 
     const bug = await prisma.bug.create({
