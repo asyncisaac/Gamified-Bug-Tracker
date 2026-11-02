@@ -1,17 +1,16 @@
-// src/app/api/bugs/[id]/route.ts - COMPLETE COM PUT
 import { NextResponse } from "next/server";
 import { prisma } from "../../../../../prisma/prisma";
 
-// GET - JÁ ESTÁ CORRETO
+// GET /api/bugs/:id
 export async function GET(
   _: Request, 
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id } = await params;
-    const bugId = parseInt(id);
+    const bugId = Number(id);
     
-    if (isNaN(bugId)) {
+    if (!Number.isSafeInteger(bugId) || bugId < 1) {
       return NextResponse.json({ error: "ID inválido" }, { status: 400 });
     }
 
@@ -31,25 +30,26 @@ export async function GET(
   }
 }
 
-// ✅ ADICIONE ESTA FUNÇÃO PUT PARA FECHAR BUGS
+// PUT /api/bugs/:id
 export async function PUT(
   req: Request, 
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = await params; // 👈 AWAIT aqui também
-    const bugId = parseInt(id);
+    const { id } = await params;
+    const bugId = Number(id);
     
-    if (isNaN(bugId)) {
+    if (!Number.isSafeInteger(bugId) || bugId < 1) {
       return NextResponse.json({ error: "ID inválido" }, { status: 400 });
     }
 
     const body = await req.json();
     const { status } = body;
+    const allowedStatus = ["open", "in-progress", "closed"];
+    if (typeof status !== "string" || !allowedStatus.includes(status)) {
+      return NextResponse.json({ error: "Status deve ser: open, in-progress ou closed" }, { status: 400 });
+    }
 
-    console.log(`🔄 Fechando bug ${bugId} para status: ${status}`);
-
-    // Atualiza o bug no banco
     const updatedBug = await prisma.bug.update({
       where: { id: bugId },
       data: { 
@@ -59,15 +59,13 @@ export async function PUT(
       include: { user: true }
     });
 
-    console.log(`✅ Bug ${bugId} fechado com sucesso!`);
-
     return NextResponse.json(updatedBug);
 
   } catch (err) {
-    console.error("❌ PUT /api/bugs/[id] error:", err);
+    console.error("PUT /api/bugs/[id] error:", err);
     
     // Erro específico para registro não encontrado
-    if (err instanceof Error && err.message.includes('RecordNotFound')) {
+    if (typeof err === "object" && err !== null && "code" in err && err.code === "P2025") {
       return NextResponse.json({ error: "Bug não encontrado" }, { status: 404 });
     }
 
@@ -78,16 +76,16 @@ export async function PUT(
   }
 }
 
-// DELETE - SE PRECISAR (opcional)
+// DELETE /api/bugs/:id
 export async function DELETE(
   _: Request, 
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id } = await params;
-    const bugId = parseInt(id);
+    const bugId = Number(id);
     
-    if (isNaN(bugId)) {
+    if (!Number.isSafeInteger(bugId) || bugId < 1) {
       return NextResponse.json({ error: "ID inválido" }, { status: 400 });
     }
 
@@ -98,6 +96,10 @@ export async function DELETE(
     return NextResponse.json({ message: "Bug deletado com sucesso" });
   } catch (err) {
     console.error("DELETE /api/bugs/[id] error:", err);
+    if (typeof err === "object" && err !== null && "code" in err && err.code === "P2025") {
+      return NextResponse.json({ error: "Bug não encontrado" }, { status: 404 });
+    }
     return NextResponse.json({ error: "Erro ao deletar bug" }, { status: 500 });
   }
 }
+
