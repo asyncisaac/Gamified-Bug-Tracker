@@ -4,7 +4,7 @@ import { prisma } from "../../../../../prisma/prisma";
 // GET /api/users/[id]
 export async function GET(_: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const { id } = await params; // 👈 AWAIT AQUI
+    const { id } = await params;
     const userId = Number(id);
     
     if (!Number.isSafeInteger(userId) || userId < 1) {
@@ -30,7 +30,7 @@ export async function GET(_: Request, { params }: { params: Promise<{ id: string
 // PUT /api/users/[id] 
 export async function PUT(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const { id } = await params; // 👈 AWAIT AQUI
+    const { id } = await params;
     const userId = Number(id);
     
     if (!Number.isSafeInteger(userId) || userId < 1) {
@@ -77,7 +77,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
 // DELETE /api/users/[id]
 export async function DELETE(_: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const { id } = await params; // 👈 AWAIT AQUI
+    const { id } = await params;
     const userId = Number(id);
     
     if (!Number.isSafeInteger(userId) || userId < 1) {
