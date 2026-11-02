@@ -1,8 +1,7 @@
-// src/app/api/bugs/[id]/route.ts - COMPLETE COM PUT
 import { NextResponse } from "next/server";
 import { prisma } from "../../../../../prisma/prisma";
 
-// GET - JÁ ESTÁ CORRETO
+// GET /api/bugs/:id
 export async function GET(
   _: Request, 
   { params }: { params: Promise<{ id: string }> }
@@ -31,13 +30,13 @@ export async function GET(
   }
 }
 
-// ✅ ADICIONE ESTA FUNÇÃO PUT PARA FECHAR BUGS
+// PUT /api/bugs/:id
 export async function PUT(
   req: Request, 
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = await params; // 👈 AWAIT aqui também
+    const { id } = await params;
     const bugId = Number(id);
     
     if (!Number.isSafeInteger(bugId) || bugId < 1) {
@@ -51,7 +50,6 @@ export async function PUT(
       return NextResponse.json({ error: "Status deve ser: open, in-progress ou closed" }, { status: 400 });
     }
 
-    // Atualiza o bug no banco
     const updatedBug = await prisma.bug.update({
       where: { id: bugId },
       data: { 
@@ -64,7 +62,7 @@ export async function PUT(
     return NextResponse.json(updatedBug);
 
   } catch (err) {
-    console.error("❌ PUT /api/bugs/[id] error:", err);
+    console.error("PUT /api/bugs/[id] error:", err);
     
     // Erro específico para registro não encontrado
     if (typeof err === "object" && err !== null && "code" in err && err.code === "P2025") {
@@ -78,7 +76,7 @@ export async function PUT(
   }
 }
 
-// DELETE - SE PRECISAR (opcional)
+// DELETE /api/bugs/:id
 export async function DELETE(
   _: Request, 
   { params }: { params: Promise<{ id: string }> }
