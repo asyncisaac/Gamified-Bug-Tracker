@@ -6,8 +6,11 @@ import { prisma } from "../../../../prisma/prisma";
 export async function GET(request: Request) { // 👈 SEM params aqui!
   try {
     const { searchParams } = new URL(request.url);
-    const page = parseInt(searchParams.get('page') || '1');
-    const limit = parseInt(searchParams.get('limit') || '10');
+    const page = Number(searchParams.get('page') || '1');
+    const limit = Number(searchParams.get('limit') || '10');
+    if (!Number.isSafeInteger(page) || page < 1 || !Number.isSafeInteger(limit) || limit < 1 || limit > 100) {
+      return NextResponse.json({ error: "Paginação inválida (page >= 1, limit entre 1 e 100)" }, { status: 400 });
+    }
     const skip = (page - 1) * limit;
 
     const [users, total] = await Promise.all([
@@ -57,14 +60,20 @@ export async function POST(req: Request) { // 👈 SEM params aqui!
     const body = await req.json();
     const { name, email, avatar } = body;
 
-    if (!name) {
+    if (typeof name !== "string" || !name.trim()) {
       return NextResponse.json({ error: "Nome é obrigatório" }, { status: 400 });
+    }
+    if (email !== undefined && email !== null && typeof email !== "string") {
+      return NextResponse.json({ error: "Email inválido" }, { status: 400 });
+    }
+    if (avatar !== undefined && avatar !== null && typeof avatar !== "string") {
+      return NextResponse.json({ error: "Avatar inválido" }, { status: 400 });
     }
 
     const user = await prisma.user.create({
       data: {
         name: name.trim(),
-        email: email?.trim(),
+        email: typeof email === "string" ? email.trim() : undefined,
         avatar,
       },
     });
@@ -75,3 +84,4 @@ export async function POST(req: Request) { // 👈 SEM params aqui!
     return NextResponse.json({ error: "Erro ao criar usuário" }, { status: 500 });
   }
 }
+
