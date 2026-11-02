@@ -1,9 +1,8 @@
-// api/users/route.ts - CORRETO (SEM PARAMS)
 import { NextResponse } from "next/server";
 import { prisma } from "../../../../prisma/prisma";
 
-// GET /api/users → para Leaderboard
-export async function GET(request: Request) { // 👈 SEM params aqui!
+// GET /api/users
+export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const page = Number(searchParams.get('page') || '1');
@@ -12,6 +11,9 @@ export async function GET(request: Request) { // 👈 SEM params aqui!
       return NextResponse.json({ error: "Paginação inválida (page >= 1, limit entre 1 e 100)" }, { status: 400 });
     }
     const skip = (page - 1) * limit;
+    if (!Number.isSafeInteger(skip)) {
+      return NextResponse.json({ error: "Página fora do limite" }, { status: 400 });
+    }
 
     const [users, total] = await Promise.all([
       prisma.user.findMany({
@@ -54,11 +56,18 @@ export async function GET(request: Request) { // 👈 SEM params aqui!
   }
 }
 
-// POST /api/users → cria user novo  
-export async function POST(req: Request) { // 👈 SEM params aqui!
+// POST /api/users
+export async function POST(req: Request) {
   try {
-    const body = await req.json();
-    const { name, email, avatar } = body;
+    const body: unknown = await req.json();
+    if (!body || typeof body !== "object" || Array.isArray(body)) {
+      return NextResponse.json({ error: "Corpo da requisição inválido" }, { status: 400 });
+    }
+    const { name, email, avatar } = body as {
+      name?: unknown;
+      email?: unknown;
+      avatar?: unknown;
+    };
 
     if (typeof name !== "string" || !name.trim()) {
       return NextResponse.json({ error: "Nome é obrigatório" }, { status: 400 });
