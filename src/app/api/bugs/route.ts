@@ -7,13 +7,25 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const status = searchParams.get('status');
     const userId = searchParams.get('userId');
-    const page = parseInt(searchParams.get('page') || '1');
-    const limit = parseInt(searchParams.get('limit') || '10');
+    const page = Number(searchParams.get('page') || '1');
+    const limit = Number(searchParams.get('limit') || '10');
+    if (!Number.isSafeInteger(page) || page < 1 || !Number.isSafeInteger(limit) || limit < 1 || limit > 100) {
+      return NextResponse.json({ error: "Paginação inválida (page >= 1, limit entre 1 e 100)" }, { status: 400 });
+    }
     const skip = (page - 1) * limit;
     
-    const where: any = {};
-    if (status) where.status = status;
-    if (userId) where.userId = parseInt(userId);
+    const allowedStatus = ["open", "in-progress", "closed"];
+    if (status && !allowedStatus.includes(status)) {
+      return NextResponse.json({ error: "Status inválido" }, { status: 400 });
+    }
+    const parsedUserId = userId === null ? undefined : Number(userId);
+    if (parsedUserId !== undefined && (!Number.isSafeInteger(parsedUserId) || parsedUserId < 1)) {
+      return NextResponse.json({ error: "userId inválido" }, { status: 400 });
+    }
+    const where = {
+      ...(status ? { status } : {}),
+      ...(parsedUserId !== undefined ? { userId: parsedUserId } : {}),
+    };
 
     const [bugs, total] = await Promise.all([
       prisma.bug.findMany({
@@ -47,7 +59,7 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { title, description, points, status, userId } = body;
 
-    if (!title || !description) {
+    if (typeof title !== "string" || !title.trim() || typeof description !== "string" || !description.trim()) {
       return NextResponse.json({ 
         error: "Title e description são obrigatórios" 
       }, { status: 400 });
@@ -60,10 +72,14 @@ export async function POST(req: Request) {
       }, { status: 400 });
     }
 
-    if (points && (points < 0 || points > 100)) {
+    if (points !== undefined && (!Number.isSafeInteger(points) || points < 0 || points > 100)) {
       return NextResponse.json({ 
         error: "Points devem ser entre 0 e 100" 
       }, { status: 400 });
+    }
+
+    if (!Number.isSafeInteger(userId) || userId < 1) {
+      return NextResponse.json({ error: "userId válido é obrigatório" }, { status: 400 });
     }
 
     if (userId) {
@@ -83,7 +99,7 @@ export async function POST(req: Request) {
         description: description.trim(),
         points: points ?? 1,
         status: status ?? "open",
-        userId: userId ?? null,
+        userId,
       },
     });
 
@@ -93,3 +109,4 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Erro ao criar bug" }, { status: 500 });
   }
 }
+
